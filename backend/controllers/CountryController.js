@@ -10,61 +10,80 @@ module.exports = {
     try {
       const countryName = req.params.countryName;
 
-      // Check if the cache is empty and then make the API call
-      if (countriesCache.getStats().keys === 0) {
-        getAllCountriesNames();
-      }
-      if (exchangeRatesCache.getStats().keys === 0) {
-        getAllExchangeRates();
-      }
+      await populateCountryAndExchangeRates();
 
       const countryData = countriesCache.get(countryName);
-
       const currencySymbols = Object.keys(countryData.currencies);
-      const countryCurrencyData = {
-        officialName: countryData.name.official, // Assuming name.official is a string
-        population: countryData.population, // Assuming population is a number
+      const countryWithExchangeRates = {
+        officialName: countryData.name.official,
+        population: countryData.population,
         currencies: currencySymbols.map((currencySymbol) => ({
           currency: currencySymbol,
           exchangeRate: exchangeRatesCache.get(currencySymbol),
         })),
       };
 
-      res.json(countryCurrencyData);
+      res.status(200).json(countryWithExchangeRates);
     } catch (error) {
       console.error("Error fetching data for the country: ", error);
 
       next(error);
     }
   },
+
+  getAllCountryNames: async (req, res, next) => {
+    try {
+      await getAllCountries();
+
+      const countryNames = countriesCache.keys();
+      res.status(200).json(countryNames);
+    } catch (error) {
+      console.error("Error fetching all country names: ", error);
+
+      next(error);
+    }
+  },
 };
 
-const populateMetaData = async () => {
-  await Promise.all([getAllCountriesNames(), getAllExchangeRates()]);
+const populateCountryAndExchangeRates = async () => {
+  await Promise.all([getAllCountries(), getAllExchangeRates()]);
 };
 
-const getAllCountriesNames = async () => {
+const getAllCountries = async () => {
+  // Check if the cache is empty and then make the API call only if necessary
+  if (countriesCache.getStats().keys === 0) {
+    await populateCountriesCache();
+  }
+};
+
+const getAllExchangeRates = async () => {
+  // Check if the cache is empty and then make the API call only if necessary
+  if (exchangeRatesCache.getStats().keys === 0) {
+    await populateExchangeRatesCache();
+  }
+};
+
+const populateCountriesCache = async () => {
   try {
     // const response = await axios.get(config.restCountriesApiUrl);
     // response.data.forEach((country) => {
     //   countriesCache.set(country.name.common, country);
     // });
-    // res.json(response.data);
 
     getCountryMockData().forEach((item) => {
       countriesCache.set(item.name.common, item);
     });
   } catch (error) {
-    console.error("Error fetching data from rest-countries Api: ", error);
+    console.error("Error fetching countries data from rest-countries API: ", error);
 
     throw error;
   }
 };
 
-const getAllExchangeRates = async () => {
+const populateExchangeRatesCache = async () => {
   try {
     // Extract rates from the response and set them in the cache with the currency symbol as the key
-    // const response = await axios.get(FIXER_EXCHANGE_RATES_API_URL);
+    // const response = await axios.get(config.exchangeRatesApiUrl);
     // const data = response.data;
     //   if (data.success) {
     //     const { rates } = data;
@@ -78,7 +97,7 @@ const getAllExchangeRates = async () => {
       exchangeRatesCache.set(currency, rates[currency]);
     });
   } catch (error) {
-    console.error("Error fetching data from rest-countries Api: ", error);
+    console.error("Error fetching exchange rates from fixer API: ", error);
 
     throw error;
   }
