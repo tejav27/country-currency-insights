@@ -83,7 +83,7 @@ function LogIn() {
               autoComplete="email"
               autoFocus
               error={emailError}
-              helperText={emailError ? "Invalid email" : ""}
+              helperText={emailError ? "Please enter a valid email" : ""}
               onChange={(e) => {
                 setEmail(e.target.value);
                 setEmailError(false);

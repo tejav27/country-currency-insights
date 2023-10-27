@@ -7,9 +7,8 @@ import { AuthContext } from "../context/AuthContext";
 import { CountryCurrencyContext } from "../context/CountryCurrencyContext";
 
 const SearchBar = () => {
-  const [countries, setCountries] = useState([]);
   const { token } = useContext(AuthContext);
-  const { setAllCountryNames, setSelectedCountry } = useContext(CountryCurrencyContext)
+  const { allCountryNames, setAllCountryNames, setSelectedCountry } = useContext(CountryCurrencyContext)
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -19,7 +18,6 @@ const SearchBar = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        setCountries(response.data);
         setAllCountryNames(response.data);
       } catch (error) {
         console.error("Error fetching countries: ", error);
@@ -38,7 +36,7 @@ const SearchBar = () => {
       <Autocomplete
         disablePortal
         id="country-search"
-        options={countries}
+        options={allCountryNames}
         sx={{ width: 300 }}
         onChange={handleCountrySelection}
         renderInput={(params) => (

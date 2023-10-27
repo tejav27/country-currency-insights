@@ -8,13 +8,11 @@ const AmountBar = () => {
 
   const handleAmountChange = (event) => {
     const value = event.target.value;
-    if (
-      value === "" ||
-      (Number.isInteger(parseFloat(value)) && parseFloat(value) > 0)
-    ) {
+    if (/^\d+$/.test(value) && parseInt(value) > 0) {
       setAmount(value);
       setError(false);
     } else {
+      setAmount(value);
       setError(true);
     }
   };

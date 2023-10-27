@@ -1,18 +1,12 @@
 import Header from "../components/Header";
+import Footer from "../components/Footer";
 import SearchBar from "../components/SearchBar";
 import CustomButton from "../components/Button";
 import AmountBar from "../components/AmountBar";
 import TableOfCountries from "../components/TableOfCountries";
 import styles from "./HomeView.module.css";
-import { CountryCurrencyContext } from "../context/CountryCurrencyContext";
-import { useContext } from "react";
 
 const HomeView = () => {
-  const { selectedCountry } = useContext(CountryCurrencyContext)
-  
-  const addCountry = () =>{
-    console.log("from home view", selectedCountry);
-  }
   
   return (
     <div className={styles.homeContainer}>
@@ -21,10 +15,11 @@ const HomeView = () => {
         <SearchBar />
         <AmountBar />
         <div className={styles.buttonContainer}>
-          <CustomButton name="ADD TO FAVORITES" onClick={addCountry} />
+          <CustomButton name="ADD TO FAVORITES" />
         </div>
       </div>
       <TableOfCountries/>
+      <Footer/>
 
     </div>
   );

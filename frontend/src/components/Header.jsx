@@ -25,7 +25,7 @@ export default function Header() {
             <MenuIcon />
           </IconButton>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            Country-Currency-Insights
+            Country Currency Insights
           </Typography>
           {token && <Button color="inherit" onClick={logout}>Logout</Button>}
         </Toolbar>

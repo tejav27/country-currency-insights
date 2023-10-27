@@ -168,6 +168,7 @@ const getExchangeRateMockData = () => {
       GBP: 0.72007,
       JPY: 107.346001,
       EUR: 0.813399,
+      UZS: 0.61234
     },
   };
 };

@@ -43,7 +43,10 @@ export default function TableOfCountries() {
 
   useEffect(() => {
     // Trigger the API call when selectedCountry changes
-      if (selectedCountry && !rows.some(row => row.countryName === selectedCountry)) {
+    if (
+      selectedCountry &&
+      !rows.some((row) => row.countryName === selectedCountry)
+    ) {
       fetchCountryData(selectedCountry);
     }
   }, [selectedCountry]);
@@ -67,7 +70,7 @@ export default function TableOfCountries() {
       console.error("Error getting country data: ", error);
     }
   };
-  
+
   return (
     <div>
       <TableContainer component={Paper}>
@@ -76,7 +79,7 @@ export default function TableOfCountries() {
             <TableRow>
               <StyledTableCell>Official Name</StyledTableCell>
               <StyledTableCell align="right">Population</StyledTableCell>
-              <StyledTableCell align="right">Currency</StyledTableCell>
+              <StyledTableCell align="right">Currency (Code)</StyledTableCell>
               <StyledTableCell align="right">Exchange Rate</StyledTableCell>
               <StyledTableCell align="right">Conversion Value</StyledTableCell>
             </TableRow>
@@ -98,13 +101,23 @@ export default function TableOfCountries() {
                     {row.exchangeRate}
                   </StyledTableCell>
                   <StyledTableCell align="right">
-                    {amount? amount*row.exchangeRate : "NA"}
+                    {isNaN(amount) ? "NA" : amount * row.exchangeRate}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
           ) : (
-            <p>The list is empty. Add some countries to display</p>
+            <TableBody>
+            <StyledTableRow>
+              <StyledTableCell
+                colSpan={5}
+                align="center"
+                style={{ fontStyle: "italic" }}
+              >
+                No countries to display. Add your favourite countries to the list.
+              </StyledTableCell>
+            </StyledTableRow>
+          </TableBody>
           )}
         </Table>
       </TableContainer>
