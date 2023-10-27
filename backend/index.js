@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require('cors');
 
 const authRoute = require("./routes/auth");
 const countryRoute = require("./routes/country");
@@ -11,6 +12,8 @@ require("dotenv").config();
 
 // express app
 const app = express();
+
+app.use(cors());
 
 // middleware
 app.use(logger);

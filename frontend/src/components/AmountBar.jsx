@@ -3,7 +3,6 @@ import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
 import { AmountContext } from '../context/AmountContext';
 
-
 const AmountBar = () => {
   const { amount, setAmount } = useContext(AmountContext);
 

@@ -1,4 +1,4 @@
-import * as React from "react";
+import { useContext } from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
@@ -10,6 +10,9 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CustomButton from "./Button";
 import theme from "../theme";
+import axios from "axios";
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -20,8 +23,8 @@ function Copyright(props) {
       {...props}
     >
       {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
+      <Link color="inherit" href="https://github.com/tejav27?tab=stars" target="blank">
+        Tejaswi
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}
@@ -29,18 +32,28 @@ function Copyright(props) {
   );
 }
 
-// TODO remove, this demo shouldn't need to reset the theme.
-
 const defaultTheme = createTheme();
 
 export default function SignIn() {
+  const { setAuthToken } = useContext(AuthContext);
+  const navigate = useNavigate();
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
-    });
+
+    fetchAuthToken();
+  };
+
+  const fetchAuthToken = async () => {
+    try {
+      const response = await axios.post('/login');
+      setAuthToken(response.data);
+
+      // Navigate to the home route
+      navigate('/');
+    } catch (error) {
+      console.error("Error getting AuthToken: ", error);
+    }
   };
 
   return (
