@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,7 +7,9 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { AmountContext } from "../context/AmountContext";
+import { AuthContext } from "../context/AuthContext";
+import { CountryCurrencyContext } from "../context/CountryCurrencyContext";
+import axios from "axios";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -29,59 +31,80 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
   },
 }));
 
-// countryCurrencyData = {
-//     officialName: countryData.name.official, // Assuming name.official is a string
-//     population: countryData.population, // Assuming population is a number
-//     currencies: currencySymbols.map((currencySymbol) => ({
-//       currency: currencySymbol,
-//       exchangeRate: exchangeRatesCache.get(currencySymbol),
-//     }
-
-const sampleData = [
-  ["India", 159, 6.0, 24],
-  ["Pakistan", 237, 9.0, 3],
-  ["Sweden", 262, 16.0, 24],
-  ["Estonia", 305, 3.7, 67],
-];
-
-const rows = sampleData.map((data) => {
-  const [countryName, population, currency, value] = data;
-  return createData(countryName, population, currency, value);
-});
-
-function createData(countryName, population, currency, value) {
-  return { countryName, population, currency, value };
+function addRow(countryName, population, currency, exchangeRate) {
+  return { countryName, population, currency, exchangeRate };
 }
 
 export default function TableOfCountries() {
-  const { amount } = useContext(AmountContext);
-  return (<div>
-     <TableContainer component={Paper}>
-      <Table sx={{ minWidth: 700 }} aria-label="customized table">
-        <TableHead>
-          <TableRow>
-            <StyledTableCell>Official Name</StyledTableCell>
-            <StyledTableCell align="right">Population</StyledTableCell>
-            <StyledTableCell align="right">Currency</StyledTableCell>
-            <StyledTableCell align="right">Value&nbsp;(g)</StyledTableCell>
-          </TableRow>
-        </TableHead>
-        {rows.length ? <TableBody>
-          {rows.map((row) => (
-            <StyledTableRow key={row.countryName}>
-              <StyledTableCell component="th" scope="row">
-                {row.countryName}
-              </StyledTableCell>
-              <StyledTableCell align="right">{row.population}</StyledTableCell>
-              <StyledTableCell align="right">{row.currency}</StyledTableCell>
-              <StyledTableCell align="right">
-                {amount * row.value}
-              </StyledTableCell>
-            </StyledTableRow>
-          ))}
-        </TableBody> : <p>The list is empty. Add some countries to display</p> }
-      </Table>
-    </TableContainer> 
+  const { token } = useContext(AuthContext);
+  const { amount, selectedCountry } = useContext(CountryCurrencyContext);
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    // Trigger the API call when selectedCountry changes
+      if (selectedCountry && !rows.some(row => row.countryName === selectedCountry)) {
+      fetchCountryData(selectedCountry);
+    }
+  }, [selectedCountry]);
+
+  const fetchCountryData = async () => {
+    console.log('fetching country.' + selectedCountry)
+    try {
+      const response = await axios.get(`/country/name/${selectedCountry}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const { officialName, population, currencies } = response.data;
+      const currency = currencies[0].currency;
+      const exchangeRate = currencies[0].exchangeRate;
+      const newRow = addRow(officialName, population, currency, exchangeRate);
+      setRows([...rows, newRow]);
+    } catch (error) {
+      console.error("Error getting country data: ", error);
+    }
+  };
+
+  return (
+    <div>
+      <TableContainer component={Paper}>
+        <Table sx={{ minWidth: 700 }} aria-label="customized table">
+          <TableHead>
+            <TableRow>
+              <StyledTableCell>Official Name</StyledTableCell>
+              <StyledTableCell align="right">Population</StyledTableCell>
+              <StyledTableCell align="right">Currency</StyledTableCell>
+              <StyledTableCell align="right">Exchange Rate</StyledTableCell>
+              <StyledTableCell align="right">Conversion Value</StyledTableCell>
+            </TableRow>
+          </TableHead>
+          {rows.length ? (
+            <TableBody>
+              {rows.map((row) => (
+                <StyledTableRow key={row.countryName}>
+                  <StyledTableCell component="th" scope="row">
+                    {row.countryName}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.population}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.currency}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {row.exchangeRate}
+                  </StyledTableCell>
+                  <StyledTableCell align="right">
+                    {amount? amount*row.exchangeRate : "NA"}
+                  </StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          ) : (
+            <p>The list is empty. Add some countries to display</p>
+          )}
+        </Table>
+      </TableContainer>
     </div>
   );
 }

@@ -34,7 +34,7 @@ function Copyright(props) {
 
 const defaultTheme = createTheme();
 
-export default function SignIn() {
+export default function LogIn() {
   const { setAuthToken } = useContext(AuthContext);
   const navigate = useNavigate();
 

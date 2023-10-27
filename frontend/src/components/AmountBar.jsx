@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
 import InputAdornment from '@mui/material/InputAdornment';
 import TextField from '@mui/material/TextField';
-import { AmountContext } from '../context/AmountContext';
+import { CountryCurrencyContext } from '../context/CountryCurrencyContext';
 
 const AmountBar = () => {
-  const { amount, setAmount } = useContext(AmountContext);
+  const { amount, setAmount } = useContext(CountryCurrencyContext);
 
     const handleAmountChange = (event) => {
       setAmount(event.target.value);

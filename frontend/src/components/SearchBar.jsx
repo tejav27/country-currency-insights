@@ -4,10 +4,12 @@ import axios from "axios";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { AuthContext } from "../context/AuthContext";
+import { CountryCurrencyContext } from "../context/CountryCurrencyContext";
 
 const SearchBar = () => {
   const [countries, setCountries] = useState([]);
   const { token } = useContext(AuthContext);
+  const { setAllCountryNames, setSelectedCountry } = useContext(CountryCurrencyContext)
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -18,6 +20,7 @@ const SearchBar = () => {
           },
         });
         setCountries(response.data);
+        setAllCountryNames(response.data);
       } catch (error) {
         console.error("Error fetching countries: ", error);
       }
@@ -26,6 +29,10 @@ const SearchBar = () => {
     fetchCountries();
   }, []);
 
+  const handleCountrySelection = (event, value) => {
+    setSelectedCountry(value);
+  };
+
   return (
     <div>
       <Autocomplete
@@ -33,6 +40,7 @@ const SearchBar = () => {
         id="country-search"
         options={countries}
         sx={{ width: 300 }}
+        onChange={handleCountrySelection}
         renderInput={(params) => (
           <TextField
             {...params}
