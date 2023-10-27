@@ -13,23 +13,7 @@ const HomeView = () => {
   const addCountry = () =>{
     console.log("from home view", selectedCountry);
   }
-
-  const sampleData = [
-    ["India", 159, 6.0, 24],
-    ["Pakistan", 237, 9.0, 3],
-    ["Sweden", 262, 16.0, 24],
-    ["Estonia", 305, 3.7, 67],
-  ];
   
-  const rows = sampleData.map((data) => {
-    const [countryName, population, currency, value] = data;
-    return addRow(countryName, population, currency, value);
-  });
-  
-  function addRow(countryName, population, currency, value) {
-    return { countryName, population, currency, value };
-  }
-
   return (
     <div className={styles.homeContainer}>
       <Header />

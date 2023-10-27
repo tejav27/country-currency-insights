@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import InputAdornment from "@mui/material/InputAdornment";
 import TextField from "@mui/material/TextField";
 import { CountryCurrencyContext } from "../context/CountryCurrencyContext";
 
@@ -33,7 +32,6 @@ const AmountBar = () => {
             min: 0,
           },
         }}
-        startAdornment={<InputAdornment position="start">SEK</InputAdornment>}
       />
     </div>
   );
