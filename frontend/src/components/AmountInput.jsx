@@ -2,12 +2,13 @@ import React, { useContext, useState } from "react";
 import TextField from "@mui/material/TextField";
 import { CountryCurrencyContext } from "../context/CountryCurrencyContext";
 
-const AmountBar = () => {
+const AmountInput = () => {
   const { amount, setAmount } = useContext(CountryCurrencyContext);
   const [error, setError] = useState(false);
 
   const handleAmountChange = (event) => {
     const value = event.target.value;
+    
     if (/^\d+$/.test(value) && parseInt(value) > 0) {
       setAmount(value);
       setError(false);
@@ -35,4 +36,4 @@ const AmountBar = () => {
   );
 };
 
-export default AmountBar;
+export default AmountInput;

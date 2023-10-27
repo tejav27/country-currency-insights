@@ -7,11 +7,10 @@ export const CountryCurrencyContext = createContext();
 export const CountryCurrencyProvider = ({ children }) => {
   const [amount, setAmount] = useState(0);
   const [allCountryNames, setAllCountryNames] = useState([]);
-  const [countryInfo, setCountryInfo] = useState({});
   const [selectedCountry, setSelectedCountry] = useState({});
 
   return (
-    <CountryCurrencyContext.Provider value={{ amount, setAmount, allCountryNames, setAllCountryNames, countryInfo, setCountryInfo, selectedCountry, setSelectedCountry }}>
+    <CountryCurrencyContext.Provider value={{ amount, setAmount, allCountryNames, setAllCountryNames, selectedCountry, setSelectedCountry }}>
       {children}
     </CountryCurrencyContext.Provider>
   );

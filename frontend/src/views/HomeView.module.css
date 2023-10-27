@@ -1,9 +1,9 @@
 .searchContainer{
     display: flex;
     justify-content: center;
-    margin: 20px 5px;
-    gap: 5px;
+    margin: 30px 5px;
+    gap: 15px;
 }
-.buttonContainer{
-    margin-left: 20px;
+.homeContainer{
+    margin: 30px;
 }

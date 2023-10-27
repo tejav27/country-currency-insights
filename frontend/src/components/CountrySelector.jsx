@@ -1,12 +1,12 @@
 import React from "react";
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import axios from "axios";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { AuthContext } from "../context/AuthContext";
 import { CountryCurrencyContext } from "../context/CountryCurrencyContext";
 
-const SearchBar = () => {
+const CountrySelector = () => {
   const { token } = useContext(AuthContext);
   const { allCountryNames, setAllCountryNames, setSelectedCountry } = useContext(CountryCurrencyContext)
 
@@ -52,4 +52,4 @@ const SearchBar = () => {
   );
 };
 
-export default SearchBar;
+export default CountrySelector;

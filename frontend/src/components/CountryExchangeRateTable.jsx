@@ -35,16 +35,17 @@ function addRow(countryName, population, currency, exchangeRate) {
   return { countryName, population, currency, exchangeRate };
 }
 
-export default function TableOfCountries() {
+export default function CountryExchangeRateTable() {
   const { token } = useContext(AuthContext);
   const { amount, selectedCountry } = useContext(CountryCurrencyContext);
   const [rows, setRows] = useState([]);
   const [uniqueCountries, setUniqueCountries] = useState([]);
 
   useEffect(() => {
-    // Trigger the API call when selectedCountry changes
+    // Trigger the API call only when 'selectedCountry' changes
     if (
       selectedCountry &&
+      Object.keys(selectedCountry).length > 0 &&
       !rows.some((row) => row.countryName === selectedCountry)
     ) {
       fetchCountryData(selectedCountry);
@@ -59,6 +60,7 @@ export default function TableOfCountries() {
             Authorization: `Bearer ${token}`,
           },
         });
+        
         const { officialName, population, currencies } = response.data;
         const currency = currencies[0].currency;
         const exchangeRate = currencies[0].exchangeRate;
@@ -71,53 +73,66 @@ export default function TableOfCountries() {
     }
   };
 
+  const formatPopulation = (population) => {
+    return (population / 1000000).toFixed(2) + " M";
+  };
+
+  const formatConversionValue = (value) => {
+    return value.toFixed(3);
+  };
+
   return (
     <div>
       <TableContainer component={Paper}>
         <Table sx={{ minWidth: 700 }} aria-label="customized table">
           <TableHead>
             <TableRow>
-              <StyledTableCell>Official Name</StyledTableCell>
-              <StyledTableCell align="right">Population</StyledTableCell>
-              <StyledTableCell align="right">Currency (Code)</StyledTableCell>
-              <StyledTableCell align="right">Exchange Rate</StyledTableCell>
-              <StyledTableCell align="right">Conversion Value</StyledTableCell>
+              <StyledTableCell align="center">Official Name</StyledTableCell>
+              <StyledTableCell align="center">
+                Population (Millions)
+              </StyledTableCell>
+              <StyledTableCell align="center">Currency (Code)</StyledTableCell>
+              <StyledTableCell align="center">Exchange Rate</StyledTableCell>
+              <StyledTableCell align="center">Conversion Value</StyledTableCell>
             </TableRow>
           </TableHead>
           {rows.length ? (
             <TableBody>
               {rows.map((row) => (
                 <StyledTableRow key={row.countryName}>
-                  <StyledTableCell component="th" scope="row">
+                  <StyledTableCell align="center" component="th" scope="row">
                     {row.countryName}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {row.population}
+                  <StyledTableCell align="center">
+                    {formatPopulation(row.population)}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
+                  <StyledTableCell align="center">
                     {row.currency}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
+                  <StyledTableCell align="center">
                     {row.exchangeRate}
                   </StyledTableCell>
-                  <StyledTableCell align="right">
-                    {isNaN(amount) ? "NA" : amount * row.exchangeRate}
+                  <StyledTableCell align="center">
+                    {isNaN(amount)
+                      ? "NA"
+                      : formatConversionValue(amount * row.exchangeRate)}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
           ) : (
             <TableBody>
-            <StyledTableRow>
-              <StyledTableCell
-                colSpan={5}
-                align="center"
-                style={{ fontStyle: "italic" }}
-              >
-                No countries to display. Add your favourite countries to the list.
-              </StyledTableCell>
-            </StyledTableRow>
-          </TableBody>
+              <StyledTableRow>
+                <StyledTableCell
+                  colSpan={5}
+                  align="center"
+                  style={{ fontStyle: "italic" }}
+                >
+                  No countries to display. Add your favourite countries to the
+                  list.
+                </StyledTableCell>
+              </StyledTableRow>
+            </TableBody>
           )}
         </Table>
       </TableContainer>

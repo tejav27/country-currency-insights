@@ -1,9 +1,6 @@
 {
-  "short_name": "React App",
+  "short_name": "Country Currency Insights",
   "name": "Country Currency Insights",
-  "icons": [
-    
-  ],
   "start_url": ".",
   "display": "standalone",
   "theme_color": "#000000",

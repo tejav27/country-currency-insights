@@ -3,5 +3,5 @@ const theme = {
     secondaryColor: '#6c757d',
   };
 
-  export default theme;
+export default theme;
   
