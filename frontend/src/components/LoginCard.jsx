@@ -1,8 +1,7 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import Avatar from "@mui/material/Avatar";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
-import Link from "@mui/material/Link";
 import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
@@ -14,34 +13,26 @@ import axios from "axios";
 import { AuthContext } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
-function Copyright(props) {
-  return (
-    <Typography
-      variant="body2"
-      color="text.secondary"
-      align="center"
-      {...props}
-    >
-      {"Copyright © "}
-      <Link color="inherit" href="https://github.com/tejav27?tab=stars" target="blank">
-        Tejaswi
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
+function isValidEmail(email) {
+  // Email validation logic using a regular expression:
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(email);
 }
 
-const defaultTheme = createTheme();
-
-export default function LogIn() {
+function LogIn() {
   const { setAuthToken } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState(false);
 
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    fetchAuthToken();
+    if (isValidEmail(email)) {
+      fetchAuthToken();
+    } else {
+      setEmailError(true);
+    }
   };
 
   const fetchAuthToken = async () => {
@@ -57,7 +48,7 @@ export default function LogIn() {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={createTheme()}>
       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
@@ -91,6 +82,12 @@ export default function LogIn() {
               name="email"
               autoComplete="email"
               autoFocus
+              error={emailError}
+              helperText={emailError ? "Invalid email" : ""}
+              onChange={(e) => {
+                setEmail(e.target.value);
+                setEmailError(false);
+              }}
               style={{
                 "&:focus": {
                   borderColor: "yellow",
@@ -100,8 +97,9 @@ export default function LogIn() {
             <CustomButton name="Login" />
           </Box>
         </Box>
-        <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
     </ThemeProvider>
   );
 }
+
+export default LogIn;

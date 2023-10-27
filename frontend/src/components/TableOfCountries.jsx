@@ -39,6 +39,7 @@ export default function TableOfCountries() {
   const { token } = useContext(AuthContext);
   const { amount, selectedCountry } = useContext(CountryCurrencyContext);
   const [rows, setRows] = useState([]);
+  const [uniqueCountries, setUniqueCountries] = useState([]);
 
   useEffect(() => {
     // Trigger the API call when selectedCountry changes
@@ -50,21 +51,24 @@ export default function TableOfCountries() {
   const fetchCountryData = async () => {
     console.log('fetching country.' + selectedCountry)
     try {
-      const response = await axios.get(`/country/name/${selectedCountry}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      const { officialName, population, currencies } = response.data;
-      const currency = currencies[0].currency;
-      const exchangeRate = currencies[0].exchangeRate;
-      const newRow = addRow(officialName, population, currency, exchangeRate);
-      setRows([...rows, newRow]);
+      if (!uniqueCountries.includes(selectedCountry)) {
+        const response = await axios.get(`/country/name/${selectedCountry}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        const { officialName, population, currencies } = response.data;
+        const currency = currencies[0].currency;
+        const exchangeRate = currencies[0].exchangeRate;
+        const newRow = addRow(officialName, population, currency, exchangeRate);
+        setRows([...rows, newRow]);
+        setUniqueCountries([...uniqueCountries, selectedCountry]);
+      }
     } catch (error) {
       console.error("Error getting country data: ", error);
     }
   };
-
+  
   return (
     <div>
       <TableContainer component={Paper}>
