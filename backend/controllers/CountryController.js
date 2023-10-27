@@ -57,8 +57,13 @@ const getAllCountries = async () => {
 };
 
 const getAllExchangeRates = async () => {
-  // Check if the cache is empty and then make the API call only if necessary
-  if (exchangeRatesCache.getStats().keys === 0) {
+  // Check if the cache is empty or any key is expired, and then make the API call only if necessary
+  const cacheStats = exchangeRatesCache.getStats();
+  const isCacheEmpty = cacheStats.keys === 0;
+  const isAnyKeyExpired =
+    cacheStats.expires > 0 && cacheStats.expires < Date.now();
+
+  if (isCacheEmpty || isAnyKeyExpired) {
     await populateExchangeRatesCache();
   }
 };
@@ -74,7 +79,10 @@ const populateCountriesCache = async () => {
       countriesCache.set(item.name.common, item);
     });
   } catch (error) {
-    console.error("Error fetching countries data from rest-countries API: ", error);
+    console.error(
+      "Error fetching countries data from rest-countries API: ",
+      error
+    );
 
     throw error;
   }

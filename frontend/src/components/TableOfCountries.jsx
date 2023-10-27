@@ -49,7 +49,6 @@ export default function TableOfCountries() {
   }, [selectedCountry]);
 
   const fetchCountryData = async () => {
-    console.log('fetching country.' + selectedCountry)
     try {
       if (!uniqueCountries.includes(selectedCountry)) {
         const response = await axios.get(`/country/name/${selectedCountry}`, {

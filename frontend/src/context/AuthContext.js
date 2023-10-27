@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState } from "react";
 
 // Create the authentication context
 export const AuthContext = createContext();
@@ -12,8 +12,13 @@ export const AuthProvider = ({ children }) => {
     setToken(newToken);
   };
 
+  // Function to clear the authentication token
+  const logout = () => {
+    setToken(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ token, setAuthToken }}>
+    <AuthContext.Provider value={{ token, setAuthToken, logout }}>
       {children}
     </AuthContext.Provider>
   );
