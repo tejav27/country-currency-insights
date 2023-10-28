@@ -9,7 +9,7 @@ import Container from "@mui/material/Container";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CustomButton from "./Button";
 import theme from "../theme";
-import axios from "axios";
+import api from "../config/api";
 import { AuthContext } from "../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 
@@ -37,7 +37,7 @@ function LogIn() {
 
   const fetchAuthToken = async () => {
     try {
-      const response = await axios.post("/login", {
+      const response = await api.post("/login", {
         email: { email }
       });
       setAuthToken(response.data);

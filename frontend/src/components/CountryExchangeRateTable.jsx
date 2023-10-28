@@ -9,7 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { AuthContext } from "../context/AuthContext";
 import { CountryCurrencyContext } from "../context/CountryCurrencyContext";
-import axios from "axios";
+import api from "../config/api";
 
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
@@ -56,7 +56,7 @@ export default function CountryExchangeRateTable() {
   const fetchCountryData = async () => {
     try {
       if (!uniqueCountries.includes(selectedCountry)) {
-        const response = await axios.get(`/countries/${selectedCountry}`, {
+        const response = await api.get(`/countries/${selectedCountry}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

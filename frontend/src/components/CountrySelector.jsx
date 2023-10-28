@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useContext } from "react";
-import axios from "axios";
+import api from "../config/api";
 import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import { AuthContext } from "../context/AuthContext";
@@ -14,7 +14,7 @@ const CountrySelector = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get("/countries", {
+        const response = await api.get("/countries", {
           headers: {
             Authorization: `Bearer ${token}`
           }
