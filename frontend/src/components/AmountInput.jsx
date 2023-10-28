@@ -21,7 +21,7 @@ const AmountInput = () => {
   return (
     <div>
       <TextField
-        label="Amount (SEK)"
+        label="Amount (EUR)"
         value={amount}
         onChange={handleAmountChange}
         error={error}
