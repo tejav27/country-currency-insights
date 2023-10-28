@@ -50,6 +50,7 @@ export default function CountryExchangeRateTable() {
     ) {
       fetchCountryData(selectedCountry);
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCountry]);
 
   const fetchCountryData = async () => {
