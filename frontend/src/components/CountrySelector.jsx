@@ -8,15 +8,16 @@ import { CountryCurrencyContext } from "../context/CountryCurrencyContext";
 
 const CountrySelector = () => {
   const { token } = useContext(AuthContext);
-  const { allCountryNames, setAllCountryNames, setSelectedCountry } = useContext(CountryCurrencyContext)
+  const { allCountryNames, setAllCountryNames, setSelectedCountry } =
+    useContext(CountryCurrencyContext);
 
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get('/country/all', {
+        const response = await axios.get("/country/all", {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            Authorization: `Bearer ${token}`
+          }
         });
         setAllCountryNames(response.data);
       } catch (error) {
@@ -44,7 +45,7 @@ const CountrySelector = () => {
             {...params}
             label="Country"
             placeholder="Search for a Country"
-            style={{border:'yellow'}}
+            style={{ border: "yellow" }}
           />
         )}
       />

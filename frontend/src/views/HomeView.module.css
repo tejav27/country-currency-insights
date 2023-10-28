@@ -1,9 +1,9 @@
-.searchContainer{
-    display: flex;
-    justify-content: center;
-    margin: 30px 5px;
-    gap: 15px;
+.searchContainer {
+  display: flex;
+  justify-content: center;
+  margin: 30px 5px;
+  gap: 15px;
 }
-.homeContainer{
-    margin: 30px;
+.homeContainer {
+  margin: 30px;
 }

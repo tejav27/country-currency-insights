@@ -14,21 +14,21 @@ import axios from "axios";
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
   [`&.${tableCellClasses.head}`]: {
     backgroundColor: "#2E3B55",
-    color: theme.palette.common.white,
+    color: theme.palette.common.white
   },
   [`&.${tableCellClasses.body}`]: {
-    fontSize: 14,
-  },
+    fontSize: 14
+  }
 }));
 
 const StyledTableRow = styled(TableRow)(({ theme }) => ({
   "&:nth-of-type(odd)": {
-    backgroundColor: theme.palette.action.hover,
+    backgroundColor: theme.palette.action.hover
   },
   // hide last border
   "&:last-child td, &:last-child th": {
-    border: 0,
-  },
+    border: 0
+  }
 }));
 
 function addRow(countryName, population, currency, exchangeRate) {
@@ -57,10 +57,10 @@ export default function CountryExchangeRateTable() {
       if (!uniqueCountries.includes(selectedCountry)) {
         const response = await axios.get(`/country/name/${selectedCountry}`, {
           headers: {
-            Authorization: `Bearer ${token}`,
-          },
+            Authorization: `Bearer ${token}`
+          }
         });
-        
+
         const { officialName, population, currencies } = response.data;
         const currency = currencies[0].currency;
         const exchangeRate = currencies[0].exchangeRate;
@@ -88,9 +88,7 @@ export default function CountryExchangeRateTable() {
           <TableHead>
             <TableRow>
               <StyledTableCell align="center">Official Name</StyledTableCell>
-              <StyledTableCell align="center">
-                Population (Millions)
-              </StyledTableCell>
+              <StyledTableCell align="center">Population (Millions)</StyledTableCell>
               <StyledTableCell align="center">Currency (Code)</StyledTableCell>
               <StyledTableCell align="center">Exchange Rate</StyledTableCell>
               <StyledTableCell align="center">Conversion Value</StyledTableCell>
@@ -106,16 +104,10 @@ export default function CountryExchangeRateTable() {
                   <StyledTableCell align="center">
                     {formatPopulation(row.population)}
                   </StyledTableCell>
+                  <StyledTableCell align="center">{row.currency}</StyledTableCell>
+                  <StyledTableCell align="center">{row.exchangeRate}</StyledTableCell>
                   <StyledTableCell align="center">
-                    {row.currency}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {row.exchangeRate}
-                  </StyledTableCell>
-                  <StyledTableCell align="center">
-                    {isNaN(amount)
-                      ? "NA"
-                      : formatConversionValue(amount * row.exchangeRate)}
+                    {isNaN(amount) ? "NA" : formatConversionValue(amount * row.exchangeRate)}
                   </StyledTableCell>
                 </StyledTableRow>
               ))}
@@ -123,13 +115,8 @@ export default function CountryExchangeRateTable() {
           ) : (
             <TableBody>
               <StyledTableRow>
-                <StyledTableCell
-                  colSpan={5}
-                  align="center"
-                  style={{ fontStyle: "italic" }}
-                >
-                  No countries to display. Add your favourite countries to the
-                  list.
+                <StyledTableCell colSpan={5} align="center" style={{ fontStyle: "italic" }}>
+                  No countries to display. Add your favourite countries to the list.
                 </StyledTableCell>
               </StyledTableRow>
             </TableBody>

@@ -1,4 +1,4 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useState } from "react";
 
 // Create the context
 export const CountryCurrencyContext = createContext();
@@ -10,7 +10,16 @@ export const CountryCurrencyProvider = ({ children }) => {
   const [selectedCountry, setSelectedCountry] = useState({});
 
   return (
-    <CountryCurrencyContext.Provider value={{ amount, setAmount, allCountryNames, setAllCountryNames, selectedCountry, setSelectedCountry }}>
+    <CountryCurrencyContext.Provider
+      value={{
+        amount,
+        setAmount,
+        allCountryNames,
+        setAllCountryNames,
+        selectedCountry,
+        setSelectedCountry
+      }}
+    >
       {children}
     </CountryCurrencyContext.Provider>
   );

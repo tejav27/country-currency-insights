@@ -5,18 +5,9 @@ import Link from "@mui/material/Link";
 const Footer = () => {
   function Copyright(props) {
     return (
-      <Typography
-        variant="body2"
-        color="text.secondary"
-        align="center"
-        {...props}
-      >
+      <Typography variant="body2" color="text.secondary" align="center" {...props}>
         {"Copyright © "}
-        <Link
-          color="inherit"
-          href="https://github.com/tejav27?tab=stars"
-          target="blank"
-        >
+        <Link color="inherit" href="https://github.com/tejav27?tab=stars" target="blank">
           Tejaswi
         </Link>{" "}
         {new Date().getFullYear()}

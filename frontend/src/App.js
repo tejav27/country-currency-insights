@@ -12,11 +12,7 @@ function App() {
     <div className="App">
       <Router>
         <Routes>
-          <Route
-            exact
-            path="/"
-            element={token ? <HomeView /> : <LoginView />}
-          />
+          <Route exact path="/" element={token ? <HomeView /> : <LoginView />} />
           <Route path="/login" element={<LoginView />} />
         </Routes>
       </Router>

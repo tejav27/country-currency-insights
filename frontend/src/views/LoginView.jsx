@@ -1,15 +1,16 @@
-import React from 'react'
-import Header from '../components/Header'
-import LoginCard from '../components/LoginCard'
-import Footer from '../components/Footer'
+import React from "react";
+import Header from "../components/Header";
+import LoginCard from "../components/LoginCard";
+import Footer from "../components/Footer";
 
 const LoginView = () => {
-  return (<div>
-    <Header/>
-    <LoginCard/>
-    <Footer/>
-  </div>
-  )
-}
+  return (
+    <div>
+      <Header />
+      <LoginCard />
+      <Footer />
+    </div>
+  );
+};
 
-export default LoginView
+export default LoginView;

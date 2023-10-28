@@ -8,7 +8,7 @@ const AmountInput = () => {
 
   const handleAmountChange = (event) => {
     const value = event.target.value;
-    
+
     if (/^\d+$/.test(value) && parseInt(value) > 0) {
       setAmount(value);
       setError(false);
@@ -28,8 +28,8 @@ const AmountInput = () => {
         helperText={error ? "Please enter a positive integer number" : ""}
         InputProps={{
           inputProps: {
-            min: 0,
-          },
+            min: 0
+          }
         }}
       />
     </div>

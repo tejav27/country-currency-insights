@@ -10,8 +10,8 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import CustomButton from "./Button";
 import theme from "../theme";
 import axios from "axios";
-import { AuthContext } from '../context/AuthContext';
-import { useNavigate } from 'react-router-dom';
+import { AuthContext } from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 function isValidEmail(email) {
   // Email validation logic using a regular expression:
@@ -37,11 +37,11 @@ function LogIn() {
 
   const fetchAuthToken = async () => {
     try {
-      const response = await axios.post('/login');
+      const response = await axios.post("/login");
       setAuthToken(response.data);
 
       // Navigate to the home route
-      navigate('/');
+      navigate("/");
     } catch (error) {
       console.error("Error getting AuthToken: ", error);
     }
@@ -56,23 +56,16 @@ function LogIn() {
             marginTop: 8,
             display: "flex",
             flexDirection: "column",
-            alignItems: "center",
+            alignItems: "center"
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: `${theme.primaryColor}` }}>
-            <LockOutlinedIcon
-              style={{ backgroundColor: `${theme.primaryColor}` }}
-            />
+            <LockOutlinedIcon style={{ backgroundColor: `${theme.primaryColor}` }} />
           </Avatar>
           <Typography component="h1" variant="h5">
             Login{" "}
           </Typography>
-          <Box
-            component="form"
-            onSubmit={handleSubmit}
-            noValidate
-            sx={{ mt: 1 }}
-          >
+          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -90,8 +83,8 @@ function LogIn() {
               }}
               style={{
                 "&:focus": {
-                  borderColor: "yellow",
-                },
+                  borderColor: "yellow"
+                }
               }}
             />
             <CustomButton name="Login" />
