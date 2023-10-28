@@ -9,7 +9,7 @@ module.exports = {
     try {
       let token = jwt.sign(
         {
-          user: "randomUser"
+          user: req.body.email
         },
         process.env.JWT_SECRET_KEY,
         { expiresIn: config.tokenValidityDurationMinutes }

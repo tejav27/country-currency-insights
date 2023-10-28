@@ -37,7 +37,9 @@ function LogIn() {
 
   const fetchAuthToken = async () => {
     try {
-      const response = await axios.post("/login");
+      const response = await axios.post("/login", {
+        email: { email }
+      });
       setAuthToken(response.data);
 
       // Navigate to the home route

@@ -50,13 +50,13 @@ export default function CountryExchangeRateTable() {
     ) {
       fetchCountryData(selectedCountry);
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCountry]);
 
   const fetchCountryData = async () => {
     try {
       if (!uniqueCountries.includes(selectedCountry)) {
-        const response = await axios.get(`/country/name/${selectedCountry}`, {
+        const response = await axios.get(`/countries/${selectedCountry}`, {
           headers: {
             Authorization: `Bearer ${token}`
           }

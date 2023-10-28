@@ -13,6 +13,12 @@ module.exports = {
       await populateCountryAndExchangeRates();
 
       const countryData = countriesCache.get(countryName);
+      if (!countryData) {
+        res.status(404).json({
+          error: `Unknown Country: ${countryName}`
+        });
+      }
+
       const currencySymbols = Object.keys(countryData.currencies);
       const countryWithExchangeRates = {
         officialName: countryData.name.official,

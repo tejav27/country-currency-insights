@@ -21,7 +21,7 @@ app.use(express.json());
 
 // routes
 app.use("/api", authRoute);
-app.use("/api/country", countryRoute);
+app.use("/api/countries", countryRoute);
 app.use(errorHandler);
 app.use(notFoundRoute);
 

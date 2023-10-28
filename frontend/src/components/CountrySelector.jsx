@@ -14,7 +14,7 @@ const CountrySelector = () => {
   useEffect(() => {
     const fetchCountries = async () => {
       try {
-        const response = await axios.get("/country/all", {
+        const response = await axios.get("/countries", {
           headers: {
             Authorization: `Bearer ${token}`
           }
@@ -26,7 +26,7 @@ const CountrySelector = () => {
     };
 
     fetchCountries();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleCountrySelection = (event, value) => {
