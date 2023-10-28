@@ -96,6 +96,8 @@ const populateExchangeRatesCache = async () => {
       Object.keys(rates).forEach((currency) => {
         exchangeRatesCache.set(currency, rates[currency]);
       });
+    } else {
+      console.error("Fixer API responded with an error code: ", data.error.code);
     }
   } catch (error) {
     console.error("Error fetching exchange rates from fixer API: ", error);
