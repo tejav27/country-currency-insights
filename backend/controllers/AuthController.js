@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const config = require('../config/config');
+const config = require("../config/config");
 
 dotenv.config();
 
@@ -9,7 +9,7 @@ module.exports = {
     try {
       let token = jwt.sign(
         {
-          user: "randomUser",
+          user: "randomUser"
         },
         process.env.JWT_SECRET_KEY,
         { expiresIn: config.tokenValidityDurationMinutes }
@@ -19,5 +19,5 @@ module.exports = {
     } catch (err) {
       res.status(500).json(err);
     }
-  },
+  }
 };

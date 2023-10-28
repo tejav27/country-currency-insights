@@ -14,7 +14,7 @@ module.exports = {
     } catch (error) {
       res.status(401).send({ error: error.message });
     }
-  },
+  }
 };
 
 function verifyToken(req) {

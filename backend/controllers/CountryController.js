@@ -19,8 +19,8 @@ module.exports = {
         population: countryData.population,
         currencies: currencySymbols.map((currencySymbol) => ({
           currency: currencySymbol,
-          exchangeRate: exchangeRatesCache.get(currencySymbol),
-        })),
+          exchangeRate: exchangeRatesCache.get(currencySymbol)
+        }))
       };
 
       res.status(200).json(countryWithExchangeRates);
@@ -42,7 +42,7 @@ module.exports = {
 
       next(error);
     }
-  },
+  }
 };
 
 const populateCountryAndExchangeRates = async () => {
@@ -60,8 +60,7 @@ const getAllExchangeRates = async () => {
   // Check if the cache is empty or any key is expired, and then make the API call only if necessary
   const cacheStats = exchangeRatesCache.getStats();
   const isCacheEmpty = cacheStats.keys === 0;
-  const isAnyKeyExpired =
-    cacheStats.expires > 0 && cacheStats.expires < Date.now();
+  const isAnyKeyExpired = cacheStats.expires > 0 && cacheStats.expires < Date.now();
 
   if (isCacheEmpty || isAnyKeyExpired) {
     await populateExchangeRatesCache();
@@ -79,10 +78,7 @@ const populateCountriesCache = async () => {
       countriesCache.set(item.name.common, item);
     });
   } catch (error) {
-    console.error(
-      "Error fetching countries data from rest-countries API: ",
-      error
-    );
+    console.error("Error fetching countries data from rest-countries API: ", error);
 
     throw error;
   }
@@ -120,21 +116,21 @@ const getCountryMockData = () => {
         nativeName: {
           rus: {
             official: "Республика Узбекистан",
-            common: "Узбекистан",
+            common: "Узбекистан"
           },
           uzb: {
             official: "O'zbekiston Respublikasi",
-            common: "O‘zbekiston",
-          },
-        },
+            common: "O‘zbekiston"
+          }
+        }
       },
       currencies: {
         UZS: {
           name: "Uzbekistani soʻm",
-          symbol: "so'm",
-        },
+          symbol: "so'm"
+        }
       },
-      population: 34232050,
+      population: 34232050
     },
     {
       name: {
@@ -143,18 +139,18 @@ const getCountryMockData = () => {
         nativeName: {
           bar: {
             official: "Republik Österreich",
-            common: "Österreich",
-          },
-        },
+            common: "Österreich"
+          }
+        }
       },
       currencies: {
         EUR: {
           name: "Euro",
-          symbol: "€",
-        },
+          symbol: "€"
+        }
       },
-      population: 8917205,
-    },
+      population: 8917205
+    }
   ];
 };
 
@@ -169,6 +165,6 @@ const getExchangeRateMockData = () => {
       JPY: 107.346001,
       EUR: 0.813399,
       UZS: 0.61234
-    },
+    }
   };
 };
