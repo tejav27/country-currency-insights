@@ -1,6 +1,3 @@
-
-```markdown
-```
 # COUNTRY CURRENCY INSIGHTS
 
 ## Description
@@ -148,5 +145,3 @@ Click [this link](https://drive.google.com/file/d/10oekzZAcG5MX8fFKRehrIZyPtSh8E
 - Enhance the request response logging, particularly for external calls, to gain deeper insights into the app's interactions with external services.
 
 - Implement a **more robust build and package solution** to streamline the deployment process.
-
-```
